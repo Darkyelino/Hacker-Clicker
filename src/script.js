@@ -1,14 +1,14 @@
 // =================================================================
 // ========================= GAME STATE ============================
 // =================================================================
+localStorage.removeItem('hackerClickerInsaneSave');
 let gameState = {
     score: 0,
     linesPerClick: 1,
     linesPerSecond: 0,
     prestigePoints: 0,
     totalLcEver: 0,
-    prestigeCost: 1000000, // Custo de prestígio reduzido para 1 Milhão
-    // Multiplicadores de prestígio
+    prestigeCost: 1000000,
     globalLpcMultiplier: 1,
     globalLpsMultiplier: 1,
     globalCostMultiplier: 1,
