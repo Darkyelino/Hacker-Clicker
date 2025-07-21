@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Clicker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/style.css">
+    <script src="src/script.js" defer></script>
+</head>
+<body>
+
+<div id="background-animation"></div>
+
+<div id="game-container">
+    <h1>Hacker Clicker</h1>
+
+    <div id="stats-container">
+        <p>Linhas de Código (LC): <span id="score">0</span></p>
+        <p>LC por Clique: <span id="lpc">1</span></p>
+        <p>LC por Segundo: <span id="lps">0</span></p>
+        <p>Fragmentos de Dados: <span id="prestige-points-display">0</span></p>
+    </div>
+
+    <div id="main-game">
+        <!-- ÁREA DE CLIQUE MOVIMENTADA PARA CIMA -->
+        <div id="clicker-section">
+            <div id="computer-clicker" onclick="computerClicked(event)">💻</div>
+            <p>Clique no Computador!</p>
+        </div>
+
+        <div id="upgrades-section">
+            <div class="upgrade-columns-container">
+                <div class="upgrade-column">
+                    <h2>Upgrades de Clique</h2>
+                    <div id="click-upgrades-list"></div>
+                </div>
+                <div class="upgrade-column">
+                    <h2>Automação</h2>
+                    <div id="auto-upgrades-list"></div>
+                </div>
+            </div>
+            <div id="prestige-section">
+                 <h2>Zona de Prestígio</h2>
+                 <p>Reinicie o progresso para ganhar Fragmentos de Dados e comprar melhorias permanentes. Você ganhará <strong id="prestige-gain" style="color: var(--prestige-color);">0</strong> Fragmentos.</p>
+                 <p>Próximo prestígio em: <strong id="prestige-cost" style="color: var(--primary-color);">1.00B</strong> LC.</p>
+                 <button id="prestige-btn" class="prestige-button" onclick="triggerPrestige()">Recomeçar</button>
+                 <button id="skill-tree-btn" class="prestige-button" onclick="openPrestigeModal()">Árvore de Habilidades</button>
+                 <hr style="border-color: var(--secondary-color); margin: 20px 0;">
+                 <h2>FIM DE JOGO</h2>
+                 <p>Custo para hackear o mundo: <strong style="color: var(--secondary-color);">1.00 Nonilhão (1e30)</strong> LC</p>
+                 <button id="win-button" onclick="hackTheWorld()">HACKEAR O MUNDO</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="prestige-modal">
+    <div id="prestige-modal-content">
+        <span class="close-modal" onclick="closePrestigeModal()">&times;</span>
+        <h2>Árvore de Habilidades Permanentes</h2>
+        <p>Use seus Fragmentos de Dados (<span id="modal-prestige-points" style="color: var(--prestige-color); font-weight: bold;">0</span>) para bônus globais.</p>
+        <div id="skill-tree-container"></div>
+    </div>
+</div>
+
+<div id="win-screen">
+    <h1>SISTEMA COMPROMETIDO</h1>
+    <p>Você conseguiu. Cada servidor, cada dispositivo, cada linha de código no planeta agora responde a você. O mundo é sua sandbox. O jogo acabou... você venceu.</p>
+</div>
+
+</body>
+</html>
