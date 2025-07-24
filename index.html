@@ -4,71 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hacker Clicker</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Khand:wght@500;600;700&display=swap">
     <link rel="shortcut icon" href="src/hacker.ico" type="image/x-icon">
     <link rel="stylesheet" href="src/style.css">
     <script src="src/script.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-grid">
 
-<div id="background-animation"></div>
+    <div id="background-animation"></div>
 
-<div id="game-container">
-    <h1>Hacker Clicker</h1>
+    <!-- Container Principal do Jogo -->
+    <div class="container mx-auto p-4 max-w-7xl">
+        
+        <!-- Cabeçalho -->
+        <header class="text-center mb-6">
+            <h1 class="text-5xl md:text-6xl font-display font-bold text-emerald-400 tracking-wider text-shadow">Hacker Clicker</h1>
+            <p class="text-blue-400">A jornada para a dominação digital começa com uma única linha de código.</p>
+        </header>
 
-    <div id="stats-container">
-        <p>Linhas de Código (LC): <span id="score">0</span></p>
-        <p>LC por Clique: <span id="lpc">1</span></p>
-        <p>LC por Segundo: <span id="lps">0</span></p>
-        <p>Fragmentos de Dados: <span id="prestige-points-display">0</span></p>
-    </div>
+        <!-- Grid Principal do Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-    <div id="main-game">
-        <!-- ÁREA DE CLIQUE MOVIMENTADA PARA CIMA -->
-        <div id="clicker-section">
-            <div id="computer-clicker" onclick="computerClicked(event)">💻</div>
-            <p>Clique no Computador!</p>
-        </div>
-
-        <div id="upgrades-section">
-            <div class="upgrade-columns-container">
-                <div class="upgrade-column">
-                    <h2>Upgrades de Clique</h2>
-                    <div id="click-upgrades-list"></div>
+            <!-- Coluna Esquerda: Estatísticas e Prestígio -->
+            <aside class="lg:col-span-3 space-y-6">
+                <!-- Card de Estatísticas -->
+                <div class="card p-4 rounded-lg shadow-lg">
+                    <h2 class="font-display text-2xl border-b border-gray-700 pb-2 mb-4 text-emerald-400">Dashboard</h2>
+                    <div class="space-y-3 text-lg">
+                        <p><strong>LC:</strong> <span id="score" class="font-bold text-emerald-300">0</span></p>
+                        <p><strong>LC/Clique:</strong> <span id="lpc" class="font-bold text-sky-400">1</span></p>
+                        <p><strong>LC/Segundo:</strong> <span id="lps" class="font-bold text-sky-400">0</span></p>
+                        <p><strong>Fragmentos:</strong> <span id="prestige-points-display" class="font-bold text-purple-400">0</span></p>
+                    </div>
                 </div>
-                <div class="upgrade-column">
-                    <h2>Automação</h2>
-                    <div id="auto-upgrades-list"></div>
+
+                <!-- Card de Prestígio -->
+                <div class="card p-4 rounded-lg shadow-lg">
+                    <h2 class="font-display text-2xl border-b border-gray-700 pb-2 mb-4 text-purple-400">Zona de Prestígio</h2>
+                    <div class="space-y-4">
+                        <p>Ganho de Prestígio: <strong id="prestige-gain" class="text-purple-300">0</strong> FD</p>
+                        <p>Custo: <strong id="prestige-cost" class="text-gray-400">1.00M</strong> LC</p>
+                        <button id="prestige-btn" onclick="triggerPrestige()" class="w-full py-2 px-4 rounded-md font-bold text-white btn-prestige">RECOMEÇAR</button>
+                        <button id="skill-tree-btn" onclick="openPrestigeModal()" class="w-full py-2 px-4 rounded-md font-bold text-white btn-prestige">HABILIDADES</button>
+                    </div>
                 </div>
+                
+                 <!-- Card Fim de Jogo -->
+                <div class="card p-4 rounded-lg shadow-lg">
+                    <h2 class="font-display text-2xl border-b border-gray-700 pb-2 mb-4 text-pink-500">Fim de Jogo</h2>
+                    <p class="mb-4">Custo para hackear o mundo: <strong class="text-pink-400">1e30 LC</strong></p>
+                    <button id="win-button" onclick="hackTheWorld()" class="w-full py-2 px-4 rounded-md font-bold text-white btn-win">HACKEAR O MUNDO</button>
+                </div>
+            </aside>
+
+            <!-- Coluna Central: Clicker e Upgrades -->
+            <main class="lg:col-span-6 space-y-6">
+                <!-- Área de Clique -->
+                <div id="clicker-section" class="card rounded-lg text-center p-6 relative flex flex-col items-center justify-center min-h-[300px] overflow-hidden">
+                    <!-- Container para os workers -->
+                    <div id="worker-container" class="absolute inset-0 z-0"></div>
+                    
+                    <div id="computer-clicker" onclick="computerClicked(event)" class="text-9xl cursor-pointer transition-transform duration-100 ease-in-out hover:scale-105 active:scale-95 z-10" style="text-shadow: 0 0 25px rgba(52, 211, 153, 0.6);">
+                        💻
+                    </div>
+                    <p class="mt-4 text-xl font-display z-10">Compilar Código!</p>
+                </div>
+                
+                <!-- Abas de Upgrades -->
+                <div class="card rounded-lg p-4">
+                    <div class="flex border-b border-gray-700">
+                        <button id="tab-click" class="flex-1 py-2 text-lg font-display border-b-2 border-emerald-400 text-emerald-400">Upgrades de Clique</button>
+                        <button id="tab-auto" class="flex-1 py-2 text-lg font-display border-b-2 border-transparent text-gray-400">Automação</button>
+                    </div>
+                    <div id="upgrades-content" class="mt-4 max-h-[500px] overflow-y-auto pr-2">
+                        <div id="click-upgrades-list" class="space-y-3"></div>
+                        <div id="auto-upgrades-list" class="hidden space-y-3"></div>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Modal da Árvore de Habilidades -->
+    <div id="prestige-modal" class="fixed inset-0 bg-black bg-opacity-80 z-50 hidden items-center justify-center p-4">
+        <div class="card rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
+            <div class="p-6 border-b border-gray-700 flex justify-between items-center">
+                <div>
+                    <h2 class="font-display text-3xl text-purple-400">Árvore de Habilidades</h2>
+                    <p>Fragmentos Disponíveis: <span id="modal-prestige-points" class="font-bold text-purple-300">0</span></p>
+                </div>
+                <button class="text-3xl text-gray-400 hover:text-white" onclick="closePrestigeModal()">&times;</button>
             </div>
-            <div id="prestige-section">
-                 <h2>Zona de Prestígio</h2>
-                 <p>Reinicie o progresso para ganhar Fragmentos de Dados e comprar melhorias permanentes. Você ganhará <strong id="prestige-gain" style="color: var(--prestige-color);">0</strong> Fragmentos.</p>
-                 <p>Próximo prestígio em: <strong id="prestige-cost" style="color: var(--primary-color);">1.00B</strong> LC.</p>
-                 <button id="prestige-btn" class="prestige-button" onclick="triggerPrestige()">Recomeçar</button>
-                 <button id="skill-tree-btn" class="prestige-button" onclick="openPrestigeModal()">Árvore de Habilidades</button>
-                 <hr style="border-color: var(--secondary-color); margin: 20px 0;">
-                 <h2>FIM DE JOGO</h2>
-                 <p>Custo para hackear o mundo: <strong style="color: var(--secondary-color);">1.00 Nonilhão (1e30)</strong> LC</p>
-                 <button id="win-button" onclick="hackTheWorld()">HACKEAR O MUNDO</button>
+            <div id="skill-tree-container" class="p-6 overflow-y-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <!-- Skills serão inseridas aqui pelo JS -->
             </div>
         </div>
     </div>
-</div>
-
-<div id="prestige-modal">
-    <div id="prestige-modal-content">
-        <span class="close-modal" onclick="closePrestigeModal()">&times;</span>
-        <h2>Árvore de Habilidades Permanentes</h2>
-        <p>Use seus Fragmentos de Dados (<span id="modal-prestige-points" style="color: var(--prestige-color); font-weight: bold;">0</span>) para bônus globais.</p>
-        <div id="skill-tree-container"></div>
+    
+    <!-- Tela de Vitória -->
+    <div id="win-screen" class="fixed inset-0 bg-black bg-opacity-95 z-[100] hidden flex-col items-center justify-center text-center p-4">
+        <h1 class="text-6xl font-display font-bold text-emerald-400 mb-4 animate-pulse">SISTEMA COMPROMETIDO</h1>
+        <p class="text-xl max-w-2xl">Você conseguiu. Cada servidor, cada dispositivo, cada linha de código no planeta agora responde a você. O mundo é sua sandbox. O jogo acabou... você venceu.</p>
     </div>
-</div>
-
-<div id="win-screen">
-    <h1>SISTEMA COMPROMETIDO</h1>
-    <p>Você conseguiu. Cada servidor, cada dispositivo, cada linha de código no planeta agora responde a você. O mundo é sua sandbox. O jogo acabou... você venceu.</p>
-</div>
-
 </body>
 </html>
